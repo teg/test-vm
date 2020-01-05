@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 CLOUD_IMAGE=$1
 
 if [ -z "$CLOUD_IMAGE" ]; then
@@ -15,12 +17,11 @@ genisoimage \
 	-volid cidata \
 	-joliet \
 	-rock \
-	user-data meta-data
+	user-data meta-data mnt/.
 
 qemu-kvm \
 	-m 1024 -snapshot \
 	-cdrom cloudinit.iso \
 	-net nic,model=virtio \
 	-net user,hostfwd=tcp::2222-:22,hostfwd=tcp::9091-:9090 \
-	-drive file=fat:mnt/,index=1 \
 	$CLOUD_IMAGE

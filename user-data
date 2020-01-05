@@ -8,7 +8,7 @@ sudo: 'ALL=(ALL) NOPASSWD:ALL'
 ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQR4bv/n0rVI0ZHV4QoEjNrnHsUFFAcLJ6FWnnJyI31aFXWjjPf3NkbynPqqv3ksk9mj6jJzIBnlo2lZ0kLKIlnblJAyz0GVctxPsBQjzijgLPWTWXS/cLoyLZNS7AsqyTe9rzUATDHmBSje5FaJ6Shas2fybiD5V56fVekgen+sKVBWyFAKsxlWV1EytH5WLn0X0H6K50eCA7sNDfNlGs8k8EXmQPmLOEV55nGI4xBxLmAwx/dn9F3t2EhBwGzw1B6Zc4HA/ayWtJcoARO3gNiazTHKZUz37AAoJ2MnLB698L39aYZ/M55zduSLcyUqF+DBHMfzHH3QRsG0kzv+X9
 mounts:
-  - [ /dev/sdb1, /mnt, auto, "defaults" ]
+  - [ /dev/cdrom, /mnt, auto, "defaults" ]
 yum_repos:
     RHEL-8-NIGHTLY-BaseOS:
         name: baseos
