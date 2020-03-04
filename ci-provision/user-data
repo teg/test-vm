@@ -1,0 +1,12 @@
+#cloud-config
+user: vm-user
+password: vm-user
+ssh_pwauth: True
+chpasswd:
+  expire: False
+sudo: 'ALL=(ALL) NOPASSWD:ALL'
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKew23WB/78OX2SlW2iV3GKyPY3jFor+SAH730t1IgwD5JaLUTyezKvsAHTUoXqHwQxgWPTB1IoFdavVP+ABsAYaZoU3xMxwJmQuQldx7RaCy+IFDA5wooBXbEIvzjMo2R5WAqUl6pA9xwh+ymRkYSQlAg3PPny+D+5BP6eVA7RIC65mcbhah3wMBjs0IPefp/OIYWsYm1An2f4Ari5YYmkAjIN9B1txY2CYadhCzbD40sygdPRNw+ypUbjspmnGhfXnlWTWV0wdnQQRJJde977QLhO+JZVQIOUP8e4aGHucWvax8dhZ+aD/9ViHg5sUD0PTxgmyFS/snb4kvFGavzMJG7UyyfblCfkUBaN1bkd7VKBsuWUg/ewkUS8L+oNLesqadwPrmIcbSLCvlCHm1gu1nU6OJoASyYOoxKOP77+caRKY1ULU/if47EYtAQOb/FsFJvmfxrar6komjE5K94ahXJE53jWuKaPa4Zui0pUoQ+d+E8P2ksw6X2nN45JW0=
+package_upgrade: True
+power_state:
+  mode: poweroff

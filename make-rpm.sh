@@ -2,43 +2,39 @@
 
 set -e
 
-OUTPUTDIR=$(realpath "${1}")
-REPO=$2
-BRANCH=$3
-SPECFILE=$4
-RELEASE=$5
-ARCH=$6
+OUTPUTDIR=$1
+ORG=$2
+REPO=$3
+COMMIT=$4
+SPECFILE=$5
+RELEASE=$6
 
 OLDDIR=$PWD
 
-if [ -z "$OUTPUTDIR" ] || [ -z "$REPO" ] || [ -z "$BRANCH" ] || [ -z "$RELEASE" ] || [ -z "$ARCH" ]; then
+if [ -z "$OUTPUTDIR" ] || [ -z "$ORG" ] || [ -z "$REPO" ] || [ -z "$COMMIT" ] || [ -z "$SPECFILE" ] || [ -z "$RELEASE" ]; then
         echo "Usage:"
-        echo "  $./make-rpm.sh <output directory> <repo> <branch> <spec file> <release> <architecture>"
+        echo "  $./make-rpm.sh <output directory> <repo> <commit> <spec file> <release> <architecture>"
+	echo
+	echo "Example:"
+        echo "  $./make-rpm.sh output/ ousbild osbuild-composer 0a4ce9dc6887ce9606b61d49127cbed4d076d966 golang-github-osbuild-composer.spec f31"
         exit 1
 fi
 
+OUTPUTDIR=$(realpath "${OUTPUTDIR}")
 
 BUILDDIR=$(mktemp -d -t osbuild-rpm-XXXXXXXXXX)
 
-git clone --depth 1 --branch ${BRANCH} ${REPO} ${BUILDDIR}/checkout
-cd ${BUILDDIR}/checkout
-COMMIT=$(git rev-parse HEAD)
-
-go mod vendor
-git add vendor
-git commit --all --message="go: add vendoring"
-git archive --prefix="osbuild-composer-${COMMIT}/" --output="${BUILDDIR}/osbuild-composer-${COMMIT}.tar.gz" HEAD
-
-# The (pre-)spec file must not contain the 'commit' variable, but may rely on us prepending it.
-echo "%global commit ${COMMIT}
-%global shortcommit     ${COMMIT:0:7}" | cat - "${BUILDDIR}/checkout/${SPECFILE}" > "${BUILDDIR}/${SPECFILE}"
+#curl "https://codeload.github.com/osbuild/${REPO}/tar.gz/${COMMIT}" -o "${BUILDDIR}/${REPO}-${COMMIT}.tar.gz"
+curl "https://raw.githubusercontent.com/${ORG}/${REPO}/${COMMIT}/${SPECFILE}" -o "${BUILDDIR}/${SPECFILE}.pre"
+echo "%global commit ${COMMIT}" | cat - "${BUILDDIR}/${SPECFILE}.pre" > "${BUILDDIR}/${SPECFILE}"
 
 cd "${BUILDDIR}"
-rhpkg --release "${RELEASE}" scratch-build --srpm --arches "${ARCH}" | tee brew.log
-TASKID=$(awk '/Created task:/ {print $3}' brew.log)
+spectool -g ${SPECFILE}
+fedpkg --release "${RELEASE}" scratch-build --srpm | tee koji.log
+TASKID=$(awk '/Created task:/ {print $3}' koji.log)
 
 cd "${OUTPUTDIR}"
-brew download-task "${TASKID}"
+koji download-task "${TASKID}"
 
 cd "${OLDDIR}"
 rm -rf "${BUILDDIR}"

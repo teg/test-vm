@@ -1,0 +1,9 @@
+Host vm
+  HostName localhost
+  Port 2222
+  User vm-user
+  IdentityFile ssh/id_rsa
+  StrictHostKeyChecking no
+  UpdateHostKeys no
+  UserKnownHostsFile /dev/null
+  LogLevel QUIET
