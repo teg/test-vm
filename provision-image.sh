@@ -26,6 +26,8 @@ else
 	exit 1
 fi
 
+mkdir -p "${OUTPUTDIR}"
+
 curl -L "${URL}" -o "${OUTPUTDIR}/${IMAGE}.partial"
 qemu-img resize "${OUTPUTDIR}/${IMAGE}.partial" 10G
 genisoimage \
