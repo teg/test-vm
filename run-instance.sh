@@ -6,7 +6,7 @@ CLOUD_IMAGE=$1
 
 if [ -z "$CLOUD_IMAGE" ]; then
 	echo "Usage:"
-	echo "	$./vm.sh image.img"
+	echo "	$./run-instance.sh image.img"
 	exit 1
 fi
 
@@ -20,6 +20,7 @@ genisoimage \
 	ci-snapshot
 
 qemu-kvm \
+  -nographic \
 	-m 2048 -snapshot \
 	-cdrom cloudinit.iso \
 	-net nic,model=virtio \
