@@ -6,7 +6,7 @@ CLOUD_IMAGE=$1
 
 if [ -z "$CLOUD_IMAGE" ]; then
 	echo "Usage:"
-	echo "	$./vm.sh image.img"
+	echo "	$./run-instance.sh image.img"
 	exit 1
 fi
 
