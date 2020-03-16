@@ -20,6 +20,7 @@ genisoimage \
 	ci-snapshot
 
 qemu-kvm \
+  -nographic \
 	-m 2048 -snapshot \
 	-cdrom cloudinit.iso \
 	-net nic,model=virtio \
