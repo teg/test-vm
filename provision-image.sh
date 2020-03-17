@@ -40,7 +40,8 @@ genisoimage \
 	ci-provision
 qemu-kvm \
 	-m 2048 \
-        -nographic \
+	-cpu host \
+	-nographic \
 	-cdrom cloudinit.iso \
 	"${OUTPUTDIR}/${IMAGE}.partial"
 mv "${OUTPUTDIR}/${IMAGE}.partial" "${OUTPUTDIR}/${IMAGE}"

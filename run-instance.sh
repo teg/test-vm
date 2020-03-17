@@ -22,6 +22,7 @@ genisoimage \
 qemu-kvm \
   -nographic \
 	-m 2048 -snapshot \
+	-cpu host \
 	-cdrom cloudinit.iso \
 	-net nic,model=virtio \
 	-net user,hostfwd=tcp::2222-:22 \
