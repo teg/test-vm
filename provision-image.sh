@@ -17,9 +17,9 @@ fi
 OUTPUTDIR=$(realpath "${OUTPUTDIR}")
 IMAGE="${RELEASE}.qcow2"
 
-if [ "${RELEASE}" == "f31" ]; then
+if [ "${RELEASE}" == "fedora-31" ]; then
 	URL="https://download.fedoraproject.org/pub/fedora/linux/releases/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2"
-elif [ "${RELEASE}" == "f32" ]; then
+elif [ "${RELEASE}" == "fedora-32" ]; then
 	URL="https://download.fedoraproject.org/pub/fedora/linux/releases/32/Cloud/x86_64/images/Fedora-Cloud-Base-32-1.6.x86_64.qcow2"
 else
 	echo "Invalid release ${RELEASE}"
